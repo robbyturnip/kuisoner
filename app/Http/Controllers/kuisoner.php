@@ -22,6 +22,7 @@ class kuisoner extends Controller
         else
             $id_kuisoner = (int)$id_kuisoner+1;
 
+        error_log($id_kuisoner);
         $id_penunjang_fasilitas = $request->input['penunjang_fasilitas'];
         $id_penilaian = $request->input['nilai'];
         foreach($id_penunjang_fasilitas as $key=>$value){
@@ -29,25 +30,14 @@ class kuisoner extends Controller
             $new_id_penunjang_fasilitas = $id_penunjang_fasilitas[$key];
             $new_id_penilaian = $id_penilaian[$key];
 
-            $kuisoner = ModelKuisoner::where('id_penunjang_fasilitas',$new_id_penunjang_fasilitas)
-                                    ->where('id_penilaian',$new_id_penilaian)
-                                    ->where('id_kuisoner',$new_id_penilaian)
-                                    ->first();
-
-            if($kuisoner){
-                return View::make('index')->with('alert','Kuisoner sudah ada');
-            }
-            else{
-
-                $kuisoner = new ModelKuisoner;
-                $kuisoner->id_penunjang_fasilitas = $new_id_penunjang_fasilitas;
-                $kuisoner->id_penilaian = $new_id_penilaian;
-                $kuisoner->id_kuisoner = $id_kuisoner;
-                error_log($kuisoner);
-                $kuisoner->save();
-
-            }
+            $kuisoner = new ModelKuisoner;
+            $kuisoner->id_penunjang_fasilitas = $new_id_penunjang_fasilitas;
+            $kuisoner->id_penilaian = $new_id_penilaian;
+            $kuisoner->id_kuisoner = $id_kuisoner;
+            $kuisoner->save();
+            
         }
+
         return redirect('/');
         
     }

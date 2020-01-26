@@ -31,7 +31,7 @@
 
         @include('myadmin.top_nav')
 
-        <div class="right_col" role="main"> 
+        <div class="right_col" role="main" style="height:100%; !important"> 
           @yield('content')
         </div>  
 
@@ -41,6 +41,9 @@
 
     </div>
 
+    <script src="{{ URL::asset('template/amcharts4/core.js')}}"></script>
+    <script src="{{ URL::asset('template/amcharts4/charts.js')}}"></script>
+    <script src="{{ URL::asset('template/amcharts4/themes/animated.js')}}"></script>
     <script src="{{ URL::asset('template/gentelella/vendors/jquery/dist/jquery.min.js')}}"></script>
     <script src="{{ URL::asset('template/gentelella/vendors/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ URL::asset('template/gentelella/vendors/fastclick/lib/fastclick.js')}}"></script>

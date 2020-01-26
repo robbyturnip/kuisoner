@@ -19,7 +19,7 @@ class landingpage extends Controller
         ->get();
         
         $data_nilai = ModelPenilaian::all();
-
+       
         return View::make('index')->with('data',$data)->with('data_nilai',$data_nilai);
     }
 }
