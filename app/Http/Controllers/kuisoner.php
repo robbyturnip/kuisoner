@@ -15,7 +15,7 @@ class kuisoner extends Controller
     }
 
     public function add(Request $request){
-        $id_kuisoner = DB::select('SELECT id_kuisoner FROM kuisoner');
+        $id_kuisoner = ModelKuisoner::max('id_kuisoner');
 
         if(!$id_kuisoner)
             $id_kuisoner = 1;
