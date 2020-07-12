@@ -5,8 +5,9 @@
 <div id="row" style="top:30px !important;; height:100% !important; width:100% !important; position: relative !important;"></div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
+
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
@@ -31,9 +32,12 @@ function drawChart(){
       }
   });
   var jumlah_fasilitas = data.length;
-  console.log(jumlah_fasilitas);
+
   for(i=0;i<jumlah_fasilitas;i++){
     var fasilitas = data[i]['fasilitas'];
+    fasilitas = fasilitas.replace(" ", "_")
+    fasilitas = fasilitas.replace(" ", "_")
+    fasilitas = fasilitas.replace(" ", "_")
     fasilitas = fasilitas.replace(" ", "_")
     $('#row').append('<div id="'+fasilitas+'" style="height:auto !important; width:auto; display:inline-block; position: relative;"><h1 style="margin:10px">'+fasilitas+'<\h1></div>');
     var list_penunjang = data[i]['list_penunjang'];

@@ -83,4 +83,103 @@ class kuisoner extends Controller
 
         return 'succes';
     }
+
+    public function kamar(Request $request){
+  
+        $id_kuisoner = $request->id_kuisoner;
+        error_log($id_kuisoner);
+
+        $data = DB::table('kuisoner')
+                ->select('penunjang.penunjang','penilaian.keterangan')
+                ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
+                ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
+                ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
+                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->where('fasilitas.id_fasilitas','3')
+                ->where('kuisoner.id_kuisoner',$id_kuisoner)
+                ->get();
+
+        $json_resp = array(
+            "data" => $data
+        );
+
+        return response()->json($json_resp, 200); 
+    }
+
+    public function kamarmandi(Request $request){
+       
+        $id_kuisoner = $request->id_kuisoner;
+        $data = DB::table('kuisoner')
+                ->select('penunjang.penunjang','penilaian.keterangan')
+                ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
+                ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
+                ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
+                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->where('fasilitas.id_fasilitas','4')
+                ->where('kuisoner.id_kuisoner',$id_kuisoner)
+                ->get();
+
+        $json_resp = array(
+            "data" => $data
+        );
+        return response()->json($json_resp, 200); 
+    }
+
+    public function ruangtamu(Request $request){
+        $id_kuisoner = $request->id_kuisoner;
+        $data = DB::table('kuisoner')
+                ->select('penunjang.penunjang','penilaian.keterangan')
+                ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
+                ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
+                ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
+                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->where('fasilitas.id_fasilitas','5')
+                ->where('kuisoner.id_kuisoner',$id_kuisoner)
+                ->get();
+        
+        $json_resp = array(
+            "data" => $data
+        );
+        return response()->json($json_resp, 200); 
+    }
+
+    public function parkiran(Request $request){
+        
+        $id_kuisoner = $request->id_kuisoner;
+        $data = DB::table('kuisoner')
+                ->select('penunjang.penunjang','penilaian.keterangan')
+                ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
+                ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
+                ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
+                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->where('fasilitas.id_fasilitas','6')
+                ->where('kuisoner.id_kuisoner',$id_kuisoner)
+                ->get();
+        
+        $json_resp = array(
+            "data" => $data
+        );
+        return response()->json($json_resp, 200); 
+    }
+
+    public function dapur(Request $request){
+          
+        $id_kuisoner = $request->id_kuisoner;
+        $data = DB::table('kuisoner')
+                ->select('penunjang.penunjang','penilaian.keterangan')
+                ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
+                ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
+                ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
+                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->where('fasilitas.id_fasilitas','7')
+                ->where('kuisoner.id_kuisoner',$id_kuisoner)
+                ->get();
+
+        $json_resp = array(
+                "data" => $data
+        );
+        return response()->json($json_resp, 200); 
+    }
+
+
 }

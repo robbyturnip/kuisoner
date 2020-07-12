@@ -25,7 +25,7 @@ class dashboard_admin extends Controller
             ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
             ->groupBy('fasilitas.fasilitas','penunjang.penunjang','penilaian.keterangan')
             ->get();
-            error_log(json_encode($data));
+            // error_log(json_encode($data));
         } catch (\Exception $e) {
             error_log($e);
         }
@@ -121,7 +121,7 @@ class dashboard_admin extends Controller
 
                 $myloop = $myloop+1;
             }
-        // error_log(json_encode($list_fasilitas));
+        error_log(json_encode($list_fasilitas));
         } catch (\Exception $e) {
             error_log($e);
         }

@@ -186,7 +186,7 @@
                             <td class="text-justify">{{$start+1}}</td>
                             <td class="text-justify">{{$kuisoner->penunjang}}</td>
                             @foreach($data_nilai as $penilaian)
-                            <td class="text-center"><input type="radio" name="input[nilai][{{$value}}]" id="inlineRadio2" value="{{$penilaian->nilai}}" required></td>
+                            <td class="text-center"><input type="radio" name="input[nilai][{{$value}}]" id="inlineRadio2" value="{{$penilaian->id_penilaian}}" required></td>
                             @endforeach
                         </tr>
                       @php ($start = $start+1)

@@ -20,15 +20,9 @@
                     </ul>
                 </li>
                 <li><a href="/user"><i class="fa fa-users"></i> Users </a></li>
+                <li><a href="/cluster"><i class="fa fa fa-cogs"></i>Clustering</a>
             </ul>
         </div>
-            <div class="menu_section">
-                <h3>Live On</h3>
-                <ul class="nav side-menu">
-                    <li><a href="/presentasi"><i class="fa fa-bar-chart-o"></i> Presentasi Data</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
 </div>

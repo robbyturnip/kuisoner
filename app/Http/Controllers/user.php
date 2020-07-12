@@ -82,7 +82,7 @@ class user extends Controller
         $id = $request->id;
         $username_before = $request->username_before;
         $username = $request->username;
-        $password = $request->password;
+        $password = md5($request->password);
         $data = $request->all();
 
         $user = ModelUser::where('username',$username)
