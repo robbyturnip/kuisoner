@@ -31,7 +31,7 @@
                         <div class="col-md-12 col-sm-12  form-group has-feedback">
                             <div class="form-group">
                                 <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
-                                <select class="form-control has-feedback-left" name="id_fasilitas" id="exampleFormControlSelect1">
+                                <select class="form-control has-feedback-left" name="id_fasilitas" id="fasilitas-select-tambah">
                                     @foreach($data_fasilitas as $fasilitas)
                                         <option value='{{$fasilitas->id_fasilitas}}'>{{$fasilitas->fasilitas}}</option>
                                     @endforeach
@@ -41,7 +41,7 @@
                         <div class="col-md-12 col-sm-12  form-group has-feedback">
                             <div class="form-group">
                                 <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
-                                <select class="form-control has-feedback-left" name="id_penunjang" id="exampleFormControlSelect1">
+                                <select class="form-control has-feedback-left" name="id_penunjang" id="penunjang-select-tambah">
                                     @foreach($data_penunjang as $penunjang)
                                         <option value='{{$penunjang->id_penunjang}}'>{{$penunjang->penunjang}}</option>
                                     @endforeach
@@ -85,8 +85,8 @@
                                 <td>{{$penunjang->fasilitas}}</td>
                                 <td>{{$penunjang->penunjang}}</td>
                                 <td style="text-align:center; color:#fff;">
-                                    <a class="btn btn-info btn-sm edit-button" data-toggle="modal" data-target="#modal-edit" ><i class="fa fa-edit"></i> Edit</a>
-                                    <a class="btn btn-danger btn-sm hapus-button" data-toggle="modal" data-target="#modal-hapus"><i class="fa fa-trash-o"></i> Hapus</a>
+                                    <button class="btn btn-info btn-sm edit-button" data-toggle="modal" data-target="#modal-edit" ><i class="fa fa-edit"></i> Edit</button>
+                                    <button class="btn btn-danger btn-sm hapus-button" data-toggle="modal" data-target="#modal-hapus"><i class="fa fa-trash-o"></i> Hapus</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -108,15 +108,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/penunjang_fasilitas/edit" method="post">
+                <form action="/penunjang_fasilitas/edit" method="POST">
                     @csrf
                     <div class="col-md-12 col-sm-12  form-group has-feedback">
-                        <input type="hidden" class="form-control has-feedback-left id_penunjang" name="id_penunjang">
+                        <input type="hidden" class="form-control has-feedback-left id_penunjang" name="id_penunjang_old">
                     </div>
                     <div class="col-md-12 col-sm-12  form-group has-feedback">
                         <div class="form-group">
                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
-                            <select class="form-control has-feedback-left" name="id_fasilitas" id="exampleFormControlSelect1">
+                            <select class="form-control has-feedback-left" name="id_fasilitas" id="fasilitas-select-edit">
                                 @foreach($data_fasilitas as $fasilitas)
                                     <option value='{{$fasilitas->id_fasilitas}}'>{{$fasilitas->fasilitas}}</option>
                                 @endforeach
@@ -126,9 +126,9 @@
                     <div class="col-md-12 col-sm-12  form-group has-feedback">
                         <div class="form-group">
                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
-                            <select class="form-control has-feedback-left" name="id_penunjang" id="exampleFormControlSelect1">
+                            <select class="form-control has-feedback-left" name="id_penunjang_new" id="penunjang-select-edit">
                                 @foreach($data_penunjang as $penunjang)
-                                    <option value='{{$penunjang->id_penunjang}}'>{{$penunjang->id_penunjang}}</option>
+                                    <option value='{{$penunjang->id_penunjang}}'>{{$penunjang->penunjang}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -157,7 +157,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Yakin ingin menghapus data <p class="penunjang" style="display:inline"></p> ?
+                Yakin ingin menghapus data <p id="penunjang_fasilitas_hapus" style="display:inline"></p> ?
                 <div class="modal-footer" style="color:#fff;">
                     <a id="delete" class="btn btn-primary">Ya</a>
                     <button class="btn btn-danger" type="button" data-dismiss="modal" aria-label="Close">Batal</button>
@@ -188,50 +188,62 @@ $(document).ready(function(){
             }
         ]
     });
+    
 
     var table = $('#datatable').DataTable();
     var id_fasilitas = '';
     var id_penunjang = '';
     var penunjang = '';
 
-    $('#datatable tbody').on( 'click', 'tr', function () {
-        id_fasilitas = table.row(this).data()[0]; 
-        id_penunjang = table.row(this).data()[1]; 
-        penunjang = table.row(this).data()[3];
-        console.log(penunjang);
-        $('.id_fasilitas').val(id_fasilitas);
-        $('.id_penunjang').val(id_penunjang);
+    $('#datatable tbody').on( 'click', 'button.edit-button', function () {
+        id_fasilitas = table.row($(this).parents('tr')).data()[0]; 
+        id_penunjang = table.row($(this).parents('tr')).data()[1];
+        fasilitas    = table.row($(this).parents('tr')).data()[2]; 
+        penunjang    = table.row($(this).parents('tr')).data()[3];
+        // console.log(id_fasilitas);
+        $('#fasilitas-select-edit').val(id_fasilitas)
+        $('#penunjang-select-edit').val(id_penunjang)
         $('.penunjang').val(penunjang);
     });
 
-    $("#delete").click(function(){
+    $('#datatable tbody').on( 'click', 'button.hapus-button', function () {
+        id_fasilitas = table.row($(this).parents('tr')).data()[0]; 
+        id_penunjang = table.row($(this).parents('tr')).data()[1]; 
+        fasilitas    = table.row($(this).parents('tr')).data()[2];
+        penunjang    = table.row($(this).parents('tr')).data()[3];
+        $('#penunjang_fasilitas_hapus').text(fasilitas+ ' - ' +penunjang);
+        
+        $("#delete").click(function(){
 
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax(
-        {
-            url: "/penunjang_fasilitas/hapus",
-            type: 'post',
-            data: {
-                "id_fasilitas": id_fasilitas, 
-                "id_penunjang": id_penunjang, 
-            },
-            success: function (response)
-            {
-                console.log(response);
-                $('#modal-hapus').modal('toggle');
-                location.reload();
+                }
+            });
+            $.ajax(
+                {
+                    url: "/penunjang_fasilitas/hapus",
+                    type: 'post',
+                    data: {
+                        "id_fasilitas": id_fasilitas, 
+                        "id_penunjang": id_penunjang, 
+                    },
+                    success: function (response)
+                    {
+                        // console.log(response);
+                        $('#modal-hapus').modal('toggle');
+                        location.reload();
 
-            },
-            error: function(error) {
-                console.log(error);
-                $('#modal-hapus').modal('toggle');
-        }
+                    },
+                    error: function(error) {
+                        // console.log(error);
+                        $('#modal-hapus').modal('toggle');
+                }
+            });
         });
     });
+
+    
 }); 
 </script>
 

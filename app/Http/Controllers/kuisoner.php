@@ -94,7 +94,7 @@ class kuisoner extends Controller
                 ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
                 ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
                 ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
-                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->join('penilaian','penilaian.id_penilaian','=','kuisoner.id_penilaian')
                 ->where('fasilitas.id_fasilitas','3')
                 ->where('kuisoner.id_kuisoner',$id_kuisoner)
                 ->get();
@@ -114,7 +114,7 @@ class kuisoner extends Controller
                 ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
                 ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
                 ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
-                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->join('penilaian','penilaian.id_penilaian','=','kuisoner.id_penilaian')
                 ->where('fasilitas.id_fasilitas','4')
                 ->where('kuisoner.id_kuisoner',$id_kuisoner)
                 ->get();
@@ -132,7 +132,7 @@ class kuisoner extends Controller
                 ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
                 ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
                 ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
-                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->join('penilaian','penilaian.id_penilaian','=','kuisoner.id_penilaian')
                 ->where('fasilitas.id_fasilitas','5')
                 ->where('kuisoner.id_kuisoner',$id_kuisoner)
                 ->get();
@@ -151,7 +151,7 @@ class kuisoner extends Controller
                 ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
                 ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
                 ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
-                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->join('penilaian','penilaian.id_penilaian','=','kuisoner.id_penilaian')
                 ->where('fasilitas.id_fasilitas','6')
                 ->where('kuisoner.id_kuisoner',$id_kuisoner)
                 ->get();
@@ -170,7 +170,7 @@ class kuisoner extends Controller
                 ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
                 ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
                 ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
-                ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                ->join('penilaian','penilaian.id_penilaian','=','kuisoner.id_penilaian')
                 ->where('fasilitas.id_fasilitas','7')
                 ->where('kuisoner.id_kuisoner',$id_kuisoner)
                 ->get();

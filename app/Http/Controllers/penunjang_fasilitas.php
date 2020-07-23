@@ -56,29 +56,31 @@ class penunjang_fasilitas extends Controller
     }
 
     public function edit(Request $request){
-
+        
         $this->validate($request, [
             'id_fasilitas' => 'required',
-            'id_penunjang' => 'required'
+            'id_penunjang_old' => 'required',
+            'id_penunjang_new' => 'required'
         ]);
-        
-        $id_fasilitas = $request->id_fasilitas;
-        $id_penunjang = $request->id_penunjang;
+        // error_log($request);
+        $id_fasilitas     = $request->id_fasilitas;
+        $id_penunjang_old = $request->id_penunjang_old;
+        $id_penunjang_new = $request->id_penunjang_new;
 
         $penunjang_fasilitas = ModelPenunjang_Fasilitas::where('id_fasilitas',$id_fasilitas)
-                        ->Where('id_penunjang',$id_penunjang)
+                        ->Where('id_penunjang',$id_penunjang_new)
                         ->first();
 
         if($penunjang_fasilitas){
-            return redirect('\penunjang_fasilitas')->with('alert','Penunjang sudah ada');
+            return redirect('penunjang_fasilitas')->with('alert','Penunjang sudah ada');
         }
         else{
 
-            $penunjang_fasilitas = ModelPenunjang_Fasilitas::where('id_fasilitas',$id_fasilitas)
+            $penunjang_fasilitas = ModelPenunjang_Fasilitas::where('id_penunjang',$id_penunjang_old)
                                                             ->where('id_fasilitas',$id_fasilitas);
-            $penunjang_fasilitas->update(array('id_penunjang'=> $id_penunjang,'id_fasilitas'=> $id_fasilitas));
+            $penunjang_fasilitas->update(array('id_penunjang'=> $id_penunjang_new,'id_fasilitas'=> $id_fasilitas));
 
-            return redirect('\penunjang_fasilitas')->with('alert-success','Berhasil ubah penunjang');
+            return redirect('penunjang_fasilitas')->with('alert-success','Berhasil edit penunjang fasilitas');
         }
         
     }

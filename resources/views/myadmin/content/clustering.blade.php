@@ -36,6 +36,9 @@
     </div>
     <div class="col-md-4 col-sm-4">
         <div id="piechart-kuisoner" ></div>
+        </br>
+        <div>Total Iterasi = <span id="iter-kuisoner" ></span></div>
+        <!-- <div id="iter-kuisoner" ></div> -->
     </div>
     <div class="col-md-8 col-sm-8">
         <div class="x_panel">
@@ -54,6 +57,8 @@
     <div class="col-md-4 col-sm-4">
         <div id="piechart-kamar" ></div>
         <br>
+        <div>Total Iterasi = <span id="iter-kamar" ></span></div>
+        <!-- <div id="iter-kamar" ></div> -->
         <!-- <div id="scatter-kamar" ></div> -->
     </div>
     <div class="col-md-8 col-sm-8">
@@ -73,6 +78,8 @@
     <div class="col-md-4 col-sm-4">
         <div id="piechart-kamar-mandi" ></div>
         <br>
+        <!-- <div id="iter-kamar-mandi" ></div> -->
+        <div>Total Iterasi = <span id="iter-kamar-mandi" ></span></div>
         <!-- <div id="scatter-kamar-mandi" ></div> -->
     </div>
     <div class="col-md-8 col-sm-8">
@@ -92,6 +99,7 @@
     <div class="col-md-4 col-sm-4">
         <div id="piechart-aula" ></div>
         <br>
+        <div>Total Iterasi = <span id="iter-aula" ></span></div>
         <!-- <div id="scatter-aula" ></div> -->
     </div>
     <div class="col-md-8 col-sm-8">
@@ -111,6 +119,7 @@
     <div class="col-md-4 col-sm-4">
         <div id="piechart-parkiran" ></div>
         <br>
+        <div>Total Iterasi = <span id="iter-parkiran" ></span></div>
         <!-- <div id="scatter-parkiran" ></div> -->
     </div>
     <div class="col-md-8 col-sm-8">
@@ -130,6 +139,7 @@
     <div class="col-md-4 col-sm-4">
         <div id="piechart-dapur" ></div>
         <br>
+        <div>Total Iterasi = <span id="iter-dapur" ></span></div>
         <!-- <div id="scatter-dapur" ></div> -->
     </div>
 </div>
@@ -320,6 +330,14 @@ $(document).ready(function(){
                 { title: "Cluster" },
                 ]
         });
+        
+        console.log(data['iter_dapur']);
+        $('#iter-kuisoner').text(data['iter_kuisoner']);
+        $('#iter-kamar').text(data['iter_kamar']);
+        $('#iter-kamar-mandi').text(data['iter_kamar_mandi']);
+        $('#iter-aula').text(data['iter_aula_dan_ruang_tamu']);
+        $('#iter-parkiran').text(data['iter_parkiran']);
+        $('#iter-dapur').text(data['iter_dapur']);
 
         data = data
     }

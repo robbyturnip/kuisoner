@@ -25,7 +25,7 @@ class cluster extends Controller
                             ->join('penunjang_fasilitas','penunjang_fasilitas.id_penunjang_fasilitas','=','kuisoner.id_penunjang_fasilitas')
                             ->join('penunjang','penunjang.id_penunjang','=','penunjang_fasilitas.id_penunjang')
                             ->join('fasilitas','fasilitas.id_fasilitas','=','penunjang_fasilitas.id_fasilitas')
-                            ->join('penilaian','penilaian.nilai','=','kuisoner.id_penilaian')
+                            ->join('penilaian','penilaian.id_penilaian','=','kuisoner.id_penilaian')
                             ->groupBy('id_kuisoner')
                             ->orderBy('id_kuisoner')
                             ->get();
@@ -43,20 +43,25 @@ class cluster extends Controller
         
         $k                  = 3;
         $iterasi            = 1000;
-        $label              = ['Baik','Cukup','Buruk'];
+        $label              = ['sangat puas','puas','tidak puas'];
         // $range = range(0, count($new_data_kuisoner)-1); 
         // shuffle($range);
         // $n = 3;
         // $random_number = array_slice($range, 0 , $n);
         $centroid_awal      = [$new_data_kuisoner[0],$new_data_kuisoner[3],$new_data_kuisoner[10]];
         
-        $kuisoner_kmeans    = $this->k_means($new_data_kuisoner, $new_data_id_kuisoner, $k, $iterasi, $centroid_awal);
+        $hasil_kuisoner     = $this->k_means($new_data_kuisoner, $new_data_id_kuisoner, $k, $iterasi, $centroid_awal);
+        error_log(json_encode($hasil_kuisoner));
+        error_log(json_encode($hasil_kuisoner));
+        $kuisoner_kmeans    = $hasil_kuisoner['list_final'];
+        $last_iterasi       = $hasil_kuisoner['last_iterasi'];
         $kuisoner_table     = $this->output_table($new_data_id_kuisoner, $kuisoner_kmeans, $label); 
         $kuisoner_chart     = $this->output_chart($kuisoner_kmeans, $label, $k);
 
         $output             = array(
                                 "table_kuisoner"=> $kuisoner_table,
                                 "chart_kuisoner"=> $kuisoner_chart,
+                                "iter_kuisoner"=> $last_iterasi,
                             );
 
         try {
@@ -102,17 +107,21 @@ class cluster extends Controller
             $name_table_fasilitas   =  "table" . "_" . str_replace(' ', '_',  $name_fasilitas);
             $name_chart_fasilitas   =  "chart" . "_" . str_replace(' ', '_',  $name_fasilitas);
             $name_scatter_fasilitas =  "scatter" . "_" . str_replace(' ', '_',  $name_fasilitas);
-            $fasilitas_kmeans       = $this->k_means($new_data_fasilitas, $new_data_id_kuisoner, $k, $iterasi, $centroid_awal);
+            $name_iter_fasilitas    =  "iter" . "_" . str_replace(' ', '_',  $name_fasilitas);
+            $hasil_fasilitas        = $this->k_means($new_data_fasilitas, $new_data_id_kuisoner, $k, $iterasi, $centroid_awal);
+            $fasilitas_kmeans       = $hasil_fasilitas['list_final'];
+            $last_iterasi           = $hasil_fasilitas['last_iterasi'];
             $fasilitas_table        = $this->output_table($new_data_id_kuisoner, $fasilitas_kmeans, $label); 
             $fasilitas_chart        = $this->output_chart($fasilitas_kmeans, $label, $k);
             $fasilitas_scatter      = $this->output_scatter($new_data_penunjang, $new_data_fasilitas, $name_scatter_fasilitas);
             $output[$name_table_fasilitas]   = $fasilitas_table;
             $output[$name_chart_fasilitas]   = $fasilitas_chart;
             $output[$name_scatter_fasilitas] = $fasilitas_scatter;
+            $output[$name_iter_fasilitas]    = $last_iterasi;
     
         }
         
-        // error_log(json_encode($output));
+        error_log(json_encode($output));
         return response()->json($output, 200);  
     }
 
@@ -220,8 +229,36 @@ class cluster extends Controller
         return $data_output;
     }
 
+    public function sse($data, $centroid,  $kluster, $k ){
+        $sse = 0;
+        for($i=0; $i<$k; $i++){
+            $cluster_sekarang = [];
+            for($row=0; $row<count($kluster); $row++){
+                if($i==$kluster[$row]){
+                    array_push($cluster_sekarang, $data[$row]) ;
+                }
+            }
+            for($row=0; $row<count($cluster_sekarang); $row++){
+
+                $jarak        = 0;
+                $jumlah_kolom = count($cluster_sekarang[$row]);
+                for($kolom = 0; $kolom < $jumlah_kolom; $kolom++){
+                    $jarak = $jarak + pow(($data[$row][$kolom]-$centroid[$i][$kolom]),2);
+                }
+                $jarak_final    =  sqrt($jarak); 
+                $sse            =  $sse+pow($jarak_final,2);
+            }
+
+        }
+
+        return $sse;
+    }
+
     public function k_means($data, $data_id_kuisoner, $kluster, $iterasi, $centroid_awal){
+        $hasil          = [];
         $list_final     = [];
+        $last_iterasi   = 0;
+        $sse_final      = 0;
         $jumlah_data    = count($data_id_kuisoner);
 
         for($iter=0; $iter<$iterasi; $iter++){
@@ -237,20 +274,34 @@ class cluster extends Controller
                     $jarak_final    =  sqrt($jarak); 
                     array_push($list_jarak_centroid,  $jarak_final);
                 }
-        
+                
                 $cluster_chossed = array_search(min($list_jarak_centroid), $list_jarak_centroid, true); 
                 array_push($list_cluster,$cluster_chossed);
             }
-            if(count(array_unique($list_cluster))<$kluster){
+
+            $sse_sekarang = $this->sse($data, $centroid_awal, $list_cluster, $kluster);
+
+
+
+            if(count(array_unique($list_cluster))<$kluster or $sse_final == $sse_sekarang  ){
                 break;
             }else{
                 
-                $centroid_awal = $this->update_centroid($list_cluster, $data, $kluster);
-                $list_final = $list_cluster;
+                $centroid_awal      = $this->update_centroid($list_cluster, $data, $kluster);
+                $list_final         = $list_cluster;
+                $last_iterasi       = $iter;
+
+            }
+            if($sse_final != $sse_sekarang ){
+                $sse_final = $sse_sekarang;
             }
             
         }
-
-        return $list_final;
+        $hasil= [
+                'list_final' =>  $list_final,
+                'last_iterasi'=>  $last_iterasi+1,
+        ];
+        
+        return $hasil;
     }
 }

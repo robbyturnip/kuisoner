@@ -38,7 +38,7 @@
             <nav class="site-navigation position-relative text-left" role="navigation">
               <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
                 <li>
-                  <div class="site-logo mr-auto"><a href="#footer-section" class="nav-link">ASRAMA</a></div>
+                  <div class="site-logo mr-auto"><a href="#footer-section" class="nav-link">ASRAMA PUTRA TPN KUTAI BARAT</a></div>
                 </li>
               </ul>
             </nav>
@@ -48,7 +48,6 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
                 <li><a href="#home-section" class="nav-link">HOME</a></li>
-                <li><a href="#fasilities-section" class="nav-link">FASILITAS</a></li>
                 <li><a href="#login-section" class="nav-link" id="to-login">LOGIN</a></li>
               </ul>
             </nav>
@@ -67,12 +66,11 @@
     </header>
 
     <div class="intro-section" id="home-section">
-      <div class="slide-1" style="background-image: url({{ URL::asset('template/oneschool/oneschool/images/background_1.jpg')}})" data-stellar-background-ratio="0.5">
+      <div class="slide-1" style="background-image: url({{ URL::asset('template/oneschool/oneschool/images/kantor-bupati-kutai-barat.jpg')}})" data-stellar-background-ratio="0.5">
         <div class="container">
           <div class="row align-items-center justify-content-center">
                 <div style="text-align: center; margin-top: 0px; margin-right: 0px; margin-bottom: 0px;">
                   <h1 class="mb-4" data-aos="fade-up" data-aos-delay="100">Website Kuisoner Asrama</h1>
-                  <p class="mb-4"  data-aos="fade-up" data-aos-delay="200">Wedang</p>
                   <nav role="navigation">
                     <ul class="main-menu">
                       <li>
@@ -90,55 +88,7 @@
       </div>
     </div>
 
-    <div class="site-section" id="fasilities-section" style="background-color: #7971ea !important;">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="100">
-            <h2 class="section-title" style="color: #fff !important;">Fasilitas</h2>
-          </div>
-        </div>
-        <div class="owl-carousel col-12 nonloop-block-14">
-          <div class="course bg-white h-100 align-self-stretch">
-            <figure class="m-0">
-              <a href="course-single.html"><img src="{{ URL::asset('template/oneschool/oneschool/images/aristiawan_1.jpg')}}" alt="Image" class="img-fluid"></a>
-            </figure>
-            <div class="course-inner-text py-4 px-4">
-              <div class="meta"><span class="icon-user"></span>Aristiawan Pantai</div>
-              <h3><a href="#">Aristiawan sedang apa</a></h3>
-              <p>Sedang difoto lah </p>
-            </div>
-          </div>
-
-          <div class="course bg-white h-100 align-self-stretch">
-            <figure class="m-0">
-              <a href="course-single.html"><img src="{{ URL::asset('template/oneschool/oneschool/images/aristiawan_2.jpg')}}" alt="Image" class="img-fluid"></a>
-            </figure>
-            <div class="course-inner-text py-4 px-4">
-              <div class="meta"><span class="icon-user"></span>Aristiawan Pantai</div>
-              <h3><a href="#">Aristiawan sedang apa</a></h3>
-              <p>Sedang difoto lah</p>
-            </div>
-          </div>
-
-          <div class="course bg-white h-100 align-self-stretch">
-            <figure class="m-0">
-              <a href="course-single.html"><img src="{{ URL::asset('template/oneschool/oneschool/images/aristiawan_3.jpg')}}" alt="Image" class="img-fluid"></a>
-            </figure>
-            <div class="course-inner-text py-4 px-4">
-              <div class="meta"><span class="icon-user"></span>Aristiawan Air Terjun</div>
-              <h3><a href="#">Aristiawan sedang apa</a></h3>
-              <p>Sedang difoto lah</p>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-7 text-center">
-            <button class="customPrevBtn btn" style="background-color:#1c4b82 !important; color:#fff !important;">Prev</button>
-            <button class="customNextBtn btn" style="background-color:#1c4b82 !important; color:#fff !important;">Next</button>
-          </div>
-        </div>
-      </div>
-    </div>
+  
 
     <div class="site-section" id="survey-section">
       <div class="container">
@@ -209,7 +159,7 @@
       </div>
     </div>
     
-    <div id="login-section" class="site-section bg-image overlay" style="background-image: url({{ URL::asset('template/oneschool/oneschool/images/background_1.jpg')}})" data-stellar-background-ratio="0.5">
+    <div id="login-section" class="site-section bg-image overlay" style="background-image: url({{ URL::asset('template/oneschool/oneschool/images/macandahan.JPG')}})" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row justify-content-center align-items-center">
             @include('login')
@@ -228,15 +178,14 @@
           </div>
 
           <div class="col-md-4" style="text-align: center;">
-            <h3>Asrama</h3>
-            <p>Wedang</p>
+            <h3>Asrama Putra TPN Kutai Barat</h3>
+            <p>Jl persada 4, RT/RW 10/14, No.240, Karangnongko, Maguwoharjo, depok, Sleman, Yogyakarta</p>
           </div>
 
           <div class="col-md-4 ml-auto justify-content-center align-items-center" style="text-align: center;">
             <h3>Links</h3>
             <ul class="list-unstyled footer-links">
               <li><a href="#home-section">Home</a></li>
-              <li><a href="#fasilities-section">Fasilities</a></li>
               <li><a href="#login-section">Login</a></li>
               <li><a href="#survey-section">Survey</a></li>
             </ul>

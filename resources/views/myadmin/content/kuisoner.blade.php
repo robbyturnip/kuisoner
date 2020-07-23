@@ -38,8 +38,8 @@
                             <tr>
                                 <td>{{$kuisoner->id_kuisoner}}</td>
                                 <td style="text-align:center; color:#fff;">
-                                    <a class="btn btn-danger btn-sm hapus-button" data-toggle="modal" data-target="#modal-hapus"><i class="fa fa-trash-o"></i> Hapus</a>
-                                    <a class="btn btn-info btn-sm info-button" data-toggle="modal" data-target="#modal-info"><i class="fa fa-info-circle"></i> Info</a>
+                                    <button class="btn btn-danger btn-sm hapus-button" data-toggle="modal" data-target="#modal-hapus"><i class="fa fa-trash-o"></i> Hapus</button>
+                                    <button class="btn btn-info btn-sm info-button" data-toggle="modal" data-target="#modal-info"><i class="fa fa-info-circle"></i> Info</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -174,49 +174,122 @@ $(document).ready(function(){
     var table = $('#datatable').DataTable();
     var id_kuisoner = '';
 
-    $("#delete").click(function(){
-        $('#datatable tbody').on( 'click', 'tr', function () {
-            id_kuisoner = table.row(this).data()[0]; 
-            $('.kuisoner').text(id_kuisoner);
-        });
-        $.ajaxSetup({
+    $('#datatable tbody').on( 'click', 'button.hapus-button', function () {
+        id_kuisoner = table.row($(this).parents('tr')).data()[0]; 
+        console.log(id_kuisoner);
+        $('.kuisoner').text(id_kuisoner);
+        $( "#delete" ).click(function() {
+            $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });
-        $.ajax(
-        {
-            url: "/kuisoner/hapus",
-            type: 'post',
-            data: {
-                "id_kuisoner": id_kuisoner 
-            },
-            success: function (response)
+            });
+            $.ajax(
             {
-                console.log(response);
-                $('#modal-hapus').modal('toggle');
-                location.reload();
-            },
-            error: function(error) {
-                console.log(error);
-                $('#modal-hapus').modal('toggle');
-        }
+                url: "/kuisoner/hapus",
+                type: 'post',
+                data: {
+                    "id_kuisoner": id_kuisoner 
+                },
+                success: function (response)
+                {
+                    console.log(response);
+                    $('#modal-hapus').modal('toggle');
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                    $('#modal-hapus').modal('toggle');
+            }
+            });
         });
     });
-  
-    $(".info-button").click(function(){
+    
 
-        $('#datatable tbody').on( 'click', 'tr', function () {
-            id_kuisoner = table.row(this).data()[0]; 
-            console.log(id_kuisoner);
 
-            $('#datatable-kamar').DataTable( {
+    $('#datatable tbody').on( 'click', 'button.info-button', function () {
+        id_kuisoner = table.row($(this).parents('tr')).data()[0]; 
+        console.log(id_kuisoner);
+
+        $('#datatable-kamar').DataTable( {
+                "destroy": true,
+                "paging": false,
+                "searching": false,
+                "serverSide": false,
+                "ajax": {
+                    "url": "/kuisoner/kamar",
+                    "type": "post",
+                    "data": {
+                        "_token": "{{ csrf_token() }}",
+                        "id_kuisoner":id_kuisoner
+                    }
+                },
+                "columns": [
+                        { "data": "penunjang" },
+                        { "data": "keterangan" }
+                    ]
+        });
+        $('#datatable-kamar-mandi').DataTable( {
+                "destroy": true,
+                "paging": false,
+                "searching": false,
+                "serverSide": false,
+                "ajax": {
+                    "url": "/kuisoner/kamarmandi",
+                    "type": "post",
+                    "data": {
+                        "_token": "{{ csrf_token() }}",
+                        "id_kuisoner":id_kuisoner
+                    },
+                },
+                    "columns": [
+                        { "data": "penunjang" },
+                        { "data": "keterangan" }
+                    ]
+        });
+        $('#datatable-ruang-tamu').DataTable( {
                     "destroy": true,
                     "paging": false,
                     "searching": false,
                     "serverSide": false,
                     "ajax": {
-                        "url": "/kuisoner/kamar",
+                    "url": "/kuisoner/ruangtamu",
+                    "type": "post",
+                    "data": {
+                        "_token": "{{ csrf_token() }}",
+                        "id_kuisoner":id_kuisoner
+                    }
+                },
+                    "columns": [
+                        { "data": "penunjang" },
+                        { "data": "keterangan" }
+                    ]
+        });
+        $('#datatable-parkiran').DataTable( {
+                    "destroy": true,
+                    "paging": false,
+                    "searching": false,
+                    "serverSide": false,
+                    "ajax": {
+                        "url": "/kuisoner/parkiran",
+                        "type": "post",
+                        "data": {
+                            "_token": "{{ csrf_token() }}",
+                            "id_kuisoner":id_kuisoner
+                        },
+                    },
+                    "columns": [
+                        { "data": "penunjang" },
+                        { "data": "keterangan" }
+                    ]
+        });
+        $('#datatable-dapur').DataTable( {
+                    "destroy": true,
+                    "paging": false,
+                    "searching": false,
+                    "serverSide": false,
+                    "ajax": {
+                        "url": "/kuisoner/dapur",
                         "type": "post",
                         "data": {
                             "_token": "{{ csrf_token() }}",
@@ -224,83 +297,9 @@ $(document).ready(function(){
                         }
                     },
                     "columns": [
-                            { "data": "penunjang" },
-                            { "data": "keterangan" }
-                        ]
-            });
-            $('#datatable-kamar-mandi').DataTable( {
-                    "destroy": true,
-                    "paging": false,
-                    "searching": false,
-                    "serverSide": false,
-                    "ajax": {
-                        "url": "/kuisoner/kamarmandi",
-                        "type": "post",
-                        "data": {
-                            "_token": "{{ csrf_token() }}",
-                            "id_kuisoner":id_kuisoner
-                        },
-                    },
-                        "columns": [
-                            { "data": "penunjang" },
-                            { "data": "keterangan" }
-                        ]
-            });
-            $('#datatable-ruang-tamu').DataTable( {
-                        "destroy": true,
-                        "paging": false,
-                        "searching": false,
-                        "serverSide": false,
-                        "ajax": {
-                        "url": "/kuisoner/ruangtamu",
-                        "type": "post",
-                        "data": {
-                            "_token": "{{ csrf_token() }}",
-                            "id_kuisoner":id_kuisoner
-                        }
-                    },
-                        "columns": [
-                            { "data": "penunjang" },
-                            { "data": "keterangan" }
-                        ]
-            });
-            $('#datatable-parkiran').DataTable( {
-                        "destroy": true,
-                        "paging": false,
-                        "searching": false,
-                        "serverSide": false,
-                        "ajax": {
-                            "url": "/kuisoner/parkiran",
-                            "type": "post",
-                            "data": {
-                                "_token": "{{ csrf_token() }}",
-                                "id_kuisoner":id_kuisoner
-                            },
-                        },
-                        "columns": [
-                            { "data": "penunjang" },
-                            { "data": "keterangan" }
-                        ]
-            });
-            $('#datatable-dapur').DataTable( {
-                        "destroy": true,
-                        "paging": false,
-                        "searching": false,
-                        "serverSide": false,
-                        "ajax": {
-                            "url": "/kuisoner/dapur",
-                            "type": "post",
-                            "data": {
-                                "_token": "{{ csrf_token() }}",
-                                "id_kuisoner":id_kuisoner
-                            }
-                        },
-                        "columns": [
-                            { "data": "penunjang" },
-                            { "data": "keterangan" }
-                        ]
-            });
-
+                        { "data": "penunjang" },
+                        { "data": "keterangan" }
+                    ]
         });
 
     });
